@@ -5,12 +5,12 @@
 * Create github repo
 * Study data dictionary
 * Study pickling techniques and performance gain
-* Basic eda and varibal transformations
+* Basic EDA and varibale transformations
 
 ## 01/23
-* Detailed eda
+* Detailed EDA
 * Filter columns with too many missing variables
-* Split the dataset to continous and categorical variables
+* Split the dataset into continous and categorical variables
 * Transform the dependent variable
 * Fill the missing valules
 
