@@ -30,3 +30,4 @@
 * Evaluate precision and recall and devise ways to improve them
 * Look for data sources to calculte volatilty of NASDAQ
 * Study the optimal choices to build a project Web Site
+* Attend introdutory course on Javascript
