@@ -28,6 +28,6 @@
 * Deeper study of models
 * Generate confusion matrices and ROC curves
 * Evaluate precision and recall and devise ways to improve them
-* Look for data sources to calculte volatilty of NASDAQ
+* Look for data sources to calculte volatilty of S&P 500
 * Study the optimal choices to build a project Web Site
 * Attend introductory course on Javascript
