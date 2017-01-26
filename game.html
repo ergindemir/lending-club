@@ -1,0 +1,15 @@
+<html>
+<script>
+var num = Math.floor(Math.random()*10);
+var guess;
+var message = "Guess a number 0-9";
+
+while(guess!=num)
+{
+  guess = prompt(message);
+  if(guess == "" || guess == null)   break;           
+  if(guess==num)    prompt("Just Right!!!");
+  else    message = guess>num ? "Too High":"Too Low";
+}
+</script>
+</html>
