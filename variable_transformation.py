@@ -3,12 +3,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 from sklearn.preprocessing import LabelEncoder
 from collections import defaultdict
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.linear_model import LogisticRegression
 from sklearn.preprocessing import StandardScaler
 from sklearn.metrics import confusion_matrix, roc_curve, auc
-
 
 df = pd.read_csv('data/loan.csv',low_memory=False)
 
@@ -340,4 +339,21 @@ ind = np.argsort(np.abs(model.coef_))[0]
  ('purpose_other', -4.9859325191414796e-05),
  ('purpose_car', -4.8452336820822633e-05)]
  '''
- 
+
+scores = model.predict_proba(X_test)[:,1]
+fpr, tpr, thresholds = roc_curve(y_test, scores)
+plt.plot(fpr,tpr)
+
+parameters = {'n_estimators': [50,100,150,200]}
+cv = GridSearchCV(RandomForestClassifier(n_jobs=-1),parameters)
+cv.fit(X_train,y_train)
+
+
+
+
+
+
+
+
+
+
