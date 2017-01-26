@@ -34,10 +34,10 @@
 
 ## 01/26-27 (Planned)
 * Further study of models. Iteratively remove dominant features and try to reproduce performance.
-* Start building classes and clean code.
+* Start building classes and cleaning the code.
 * Start working on time series data af SP500, generate volatility curve.
 * Determine how default rates change with time for a given credit grade.
-* Try incorporate volatility data to the set and devise an ensemble model for a bette prediction.
-* Start on portfolio theory, in particular risk/return characteristics.
+* Try incorporate volatility data to the set and devise an ensemble model forbetter prediction.
+* Start working on portfolio theory, in particular risk/return characteristics.
 
 
