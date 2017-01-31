@@ -32,12 +32,16 @@
 * Attended introductory course on Javascript, first application (a game) coded in js.
 * Still searching for a good web template, it looks like admin dasboard templates are most suitable for this project.
 
-## 01/26-27 (Planned)
-* Further study of models. Iteratively remove dominant features and try to reproduce performance.
+## 01/26-30
 * Start building classes and cleaning the code.
 * Start working on time series data af SP500, generate volatility curve.
-* Determine how default rates change with time for a given credit grade.
-* Try incorporate volatility data to the set and devise an ensemble model forbetter prediction.
-* Start working on portfolio theory, in particular risk/return characteristics.
+* More research on building a website with flask and bootstrap theme
+* Start working on portfolio theory, in particular risk/return curves.
+* Introduction to quadratic programming with python to optimize portfolio
 
+## 01/31 (Planned)
+* Using the previous compile three modules
+  * A model that predicts the default rates based on the dataset
+  * A model that combines volatility of the stock market for better prediction
+  * A module that optimizes porfolio for a given risk level
 

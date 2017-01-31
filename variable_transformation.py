@@ -348,7 +348,12 @@ parameters = {'n_estimators': [50,100,150,200]}
 cv = GridSearchCV(RandomForestClassifier(n_jobs=-1),parameters)
 cv.fit(X_train,y_train)
 
-
+''' grid search results:
+[mean: 0.92983, std: 0.00040, params: {'n_estimators': 50},
+ mean: 0.92991, std: 0.00021, params: {'n_estimators': 100},
+ mean: 0.92999, std: 0.00009, params: {'n_estimators': 150},
+ mean: 0.92994, std: 0.00010, params: {'n_estimators': 200}]
+'''
 
 
 
