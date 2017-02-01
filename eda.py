@@ -33,7 +33,7 @@ bad_status = ['Charged Off',
 
 df['default'] = df.loan_status.apply(lambda x: 1 if x in bad_status else 0)
 df['termLength'] = df.term.apply(lambda x: int(x.strip().split()[0]))
-
+df['Date'] = df.lastPaymentDate.values.astype('datetime64[M]') 
 #with open(r"data/df.pkl", "wb") as output_file:
 #     cPickle.dump(df, output_file)
 #
