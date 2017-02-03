@@ -1,14 +1,16 @@
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
 from collections import defaultdict
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.model_selection import train_test_split
 
 class Data(object):
     
-    def __init__(self , dfloan=None , loan_file='data/loan.csv' , 
-                 sp500_file='data/sp500.csv', exclude_columns = None):
+    def __init__(self , 
+                 dfloan=None , 
+                 loan_file='data/loan.csv' , 
+                 sp500_file='data/sp500.csv'):
+        
         self.dict = {
         'float_columns' : ['int_rate', 'loan_amnt', 'funded_amnt', 'dti', 'total_rec_late_fee',
                            'funded_amnt_inv', 'collection_recovery_fee', 'recoveries',
@@ -31,7 +33,11 @@ class Data(object):
         'similar_columns' : ['total_pymnt_inv','out_prncp_inv', 'out_prncp',
                              'funded_amnt_inv', 'installment', 'loan_amnt'],
                              
-        'recovery_columns' : ['recoveries', 'collection_recovery_fee'],
+        'leakage_columns' : ['recoveries', 'collection_recovery_fee',
+                             'total_rec_prncp',  
+                             'total_pymnt','total_rec_int'],
+                             
+                             
                              
         'select_columns' : ['Volatility', 'termLength']                     
         }
@@ -41,32 +47,22 @@ class Data(object):
             self.dfloan=dfloan
         else:
             self.dfloan = pd.read_csv(loan_file,low_memory=False)
-        self.sp500_file = sp500_file
-        self.exclude_columns = exclude_columns    
-        self.reset()
-
-    def reset(self):            
         self.df = self.filter_rows()
         self.dffloat = self.get_float_columns()
-        self.filter_columns()
         self.dfcat = self.get_cat_columns()
         self.transform_columns()
-        self.add_volatility(self.sp500_file , 42) 
+        self.add_volatility(sp500_file , 42) 
         
     def filter_rows(self):
         return self.dfloan[~self.dfloan.loan_status.isin(self.dict['current_status'])]
         
-    def filter_columns(self):
-        self.df.drop(self.dict['recovery_columns'],axis=1,inplace=True)
-        self.df.drop(self.dict['similar_columns'],axis=1,inplace=True)
-        
     def get_float_columns(self):
-        dffloat = self.df[self.dict['float_columns']].drop(self.exclude_columns, axis=1, errors='ignore')
+        dffloat = self.df[self.dict['float_columns']]
         dffloat.apply(lambda x: x.fillna(np.mean(x),inplace=True))
         return dffloat
 
     def get_cat_columns(self):
-        return self.df[self.dict['cat_columns']].drop(self.exclude_columns, axis=1, errors='ignore')
+        return self.df[self.dict['cat_columns']]
     
     def transform_columns(self):
         self.df.issue_d = pd.to_datetime(self.df.issue_d,format='%b-%Y')
@@ -92,24 +88,30 @@ class Data(object):
         self.dfvol = dfvol
         
     def encode_categorical(self, type):
+        dfcat0 = self.dfcat.drop(self.filter_columns, axis=1, errors='ignore')
         if type == 'label':
             d = defaultdict(LabelEncoder)
-            dfenc = self.dfcat.apply(lambda x: d[x.name].fit_transform(x))
+            dfenc = dfcat0.apply(lambda x: d[x.name].fit_transform(x))
         else:
-            dfenc = pd.concat([pd.get_dummies(self.dfcat[colname],prefix=colname) 
-            for colname in self.dfcat.columns],axis=1)
+            dfenc = pd.concat([pd.get_dummies(dfcat0[colname],prefix=colname) 
+            for colname in dfcat0.columns],axis=1)
         
         return dfenc
 
-    def merge_dataset(self, type='label'):
+    def merge_dataset(self, type='label',exclude_columns = None):
+        self.filter_columns = self.dict['leakage_columns'] + self.dict['similar_columns']
+        if exclude_columns is not None:
+            self.filter_columns = self.filter_columns + exclude_columns
         dfenc = self.encode_categorical(type)
-        dfselect = self.df[self.dict['select_columns']]
-        self.dfmerge =  pd.concat([self.dffloat,dfenc,dfselect],axis=1)
+        dfselect = self.df[self.dict['select_columns']].drop(self.filter_columns, axis=1, errors='ignore')
+        dffloat0 = self.dffloat.drop(self.filter_columns, axis=1, errors='ignore')
+        self.dfmerge =  pd.concat([dffloat0, dfenc, dfselect],axis=1)
         
     def get_train_test_set(self, test_size=0.25):
-        X = StandardScaler().fit_transform(self.dfmerge.values)
+#        X = StandardScaler().fit_transform(self.dfmerge.values)
+        X = self.dfmerge.values
         y = self.df.default.values
-        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size)
+        X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=0)
         return X_train, X_test, y_train, y_test
         
         
