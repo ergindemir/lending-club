@@ -30,12 +30,7 @@ df_float.apply(lambda x: x.fillna(np.mean(x),inplace=True))
 '''transform variables
 '''
 
-bad_status = ['Charged Off',
- 'Default',
- 'Late (31-120 days)',
- 'In Grace Period',
- 'Late (16-30 days)',
- 'Does not meet the credit policy. Status:Charged Off']
+
 
 df['default'] = df.loan_status.apply(lambda x: 1 if x in bad_status else 0)
 
@@ -344,7 +339,7 @@ scores = model.predict_proba(X_test)[:,1]
 fpr, tpr, thresholds = roc_curve(y_test, scores)
 plt.plot(fpr,tpr)
 
-parameters = {'n_estimators': [50,100,150,200]}
+parameters = {'n_estimators': [50,100,200,400]}
 cv = GridSearchCV(RandomForestClassifier(n_jobs=-1),parameters)
 cv.fit(X_train,y_train)
 

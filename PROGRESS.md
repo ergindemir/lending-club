@@ -39,7 +39,7 @@
 * Start working on portfolio theory, in particular risk/return curves.
 * Introduction to quadratic programming with python to optimize portfolio
 
-## 01/31 (Planned)
+## 01/31-02/01 (Planned)
 * Using the previous compile three modules
   * A model that predicts the default rates based on the dataset
   * A model that combines volatility of the stock market for better prediction

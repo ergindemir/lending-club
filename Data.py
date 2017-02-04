@@ -109,8 +109,10 @@ class Data(object):
         
     def get_train_test_set(self, test_size=0.25):
 #        X = StandardScaler().fit_transform(self.dfmerge.values)
-        X = self.dfmerge.values
-        y = self.df.default.values
+#        X = self.dfmerge.values
+#        y = self.df.default.values
+        X = self.dfmerge
+        y = self.df.default
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=0)
         return X_train, X_test, y_train, y_test
         
