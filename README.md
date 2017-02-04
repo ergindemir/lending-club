@@ -32,6 +32,8 @@ The basic functions of Data class are:
 * Create Train/Test data sets.
 
 ## 4. Final Analysis
+https://github.com/ergindemir/lending-club/blob/master/Analysis.ipynb
+
 In this part we briefly demonstrate the importance of the market volatility concept in predicting default probability.
 
 ## 5. Results
