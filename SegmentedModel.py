@@ -14,20 +14,21 @@ class SegmentedModel(object):
         train_test_sets = self.get_train_test_sets(inds , (X_train, X_test, y_train, y_test))
         trainscores = []
         testscores = []
-        weights = []
+        trainweights = []
+        testweights = []
         model = self.model
         
         for (X_train, X_test, y_train, y_test) in train_test_sets:
             model.fit(X_train,y_train)
             trainscore = model.score(X_train,y_train)
             testscore = model.score(X_test,y_test)
-            weight = len(y_test)
             trainscores.append(trainscore)
             testscores.append(testscore)
-            weights.append(weight)
+            trainweights.append(len(y_train))
+            testweights.append(len(y_test))
             
-        self.trainscore = np.average(trainscores,weights=weights)
-        self.testscore = np.average(testscores,weights=weights)
+        self.trainscore = np.average(trainscores,weights=trainweights)
+        self.testscore = np.average(testscores,weights=testweights)
         
     def get_group_ind(self, df, column, value):
         return df[column].isin(value)
