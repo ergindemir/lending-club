@@ -32,19 +32,14 @@ The basic operations of Data class are:
 * Exclude features manually
 * Create Train/Test data sets.
 
-## 4. Segmented Model Class
-https://github.com/ergindemir/lending-club/blob/master/SegmentedModel.py
-
-The data 
-
-## 5. Final Analysis
-https://github.com/ergindemir/lending-club/blob/master/Segmentation.ipynb
+## 4. Final Analysis
+https://github.com/ergindemir/lending-club/blob/master/Analysis.ipynb
 
 In this part we briefly demonstrate the importance of the market volatility concept in predicting default probability.
 
-## 6. Results
+## 5. Results
 It comes out volatility is a key component determining the default rate of a credit portfolio.
 As a single predictor variable, it improves overall model performance by at least 1% for a non volatile market.
 For volatile periods, the model performance improves more than 30%.
 
-![Alt](https://github.com/ergindemir/lending-club/blob/master/segmented_model_performance.png "Model Performance")
+![Alt](https://github.com/ergindemir/lending-club/blob/master/model%20performance.png "Model Performance")
