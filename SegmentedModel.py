@@ -21,7 +21,7 @@ class SegmentedModel(object):
             model.fit(X_train,y_train)
             trainscore = model.score(X_train,y_train)
             testscore = model.score(X_test,y_test)
-            weight = len(y_train)
+            weight = len(y_test)
             trainscores.append(trainscore)
             testscores.append(testscore)
             weights.append(weight)
