@@ -58,6 +58,4 @@ Segmenting on ‘termLength’ provided good performance gain on training set, b
 The maximum performance gain by segmentation was about 3% percent, which is still 3% below random forest model.
 
 ![Alt](https://github.com/ergindemir/lending-club/blob/master/segmented_model_performance.png "Model Performance")
-del.py
-
 
