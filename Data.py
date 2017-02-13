@@ -3,6 +3,7 @@ import numpy as np
 from collections import defaultdict
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.model_selection import train_test_split
+import warnings
 
 class Data(object):
     
@@ -42,7 +43,7 @@ class Data(object):
         'select_columns' : ['Volatility', 'termLength']                     
         }
     
-        
+        warnings.filterwarnings("ignore")
         if dfloan is not None:
             self.dfloan=dfloan
         else:
@@ -116,7 +117,8 @@ class Data(object):
         X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=0)
         return X_train, X_test, y_train, y_test
         
-        
+
+    
         
         
         
