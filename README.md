@@ -52,10 +52,10 @@ The segmented model performances are plotted in decreasing scores with the perfo
 
 ## 6. Results
 
-Interestingly, all segmented models yielded better performances compared to the baseline logistic regression model.
-Best test score is obtained by segmenting the data set by the ‘grade’ variable only.
-Segmenting on ‘termLength’ provided good performance gain on training set, but not on test set.
-The maximum performance gain by segmentation was about 3% percent, which is still 3% below random forest model.
+* All segmentation options gave better accuracy than the baseline logistic regression model. 
+* For segmentation strategy 'grade' is a significant column. If one has to use logistic regression model, one should use segmentation based on the 'grade' column to achieve a significant performance gain.
+* Columns 'termLength' and 'purpose' provide minor gains when segmentation is applied solely on these columns.
+* Segmentation based on 3 columns at the same time, surprisingly, gave the best performance gain. The gain compared to 'grade' column, however, is miniscule, and can be ignored if somebody opts for a simpler model.
 
 ![Alt](https://github.com/ergindemir/lending-club/blob/master/segmented_model_performance.png "Model Performance")
 
