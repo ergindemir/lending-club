@@ -1,34 +1,36 @@
 import numpy as np
 from itertools import product
+from sklearn.base import BaseEstimator
+import copy
 
-class SegmentedModel(object):
+class SegmentedModel(BaseEstimator):
 
     def __init__(self, df, groups, model):
         self.df = df
         self.model = model
         self.groups = groups
+        inds_list = self.get_group_inds_list(df, groups)
+        self.inds = self.get_combined_inds(inds_list)
 
-    def fit(self, (X_train, X_test, y_train, y_test)):
-        inds_list = self.get_group_inds_list(self.df, self.groups)
-        inds = self.get_combined_inds(inds_list)
-        train_test_sets = self.get_train_test_sets(inds , (X_train, X_test, y_train, y_test))
-        trainscores = []
-        testscores = []
-        trainweights = []
-        testweights = []
-        model = self.model
+    def fit(self, X, y):
+        sub_sets = self.get_sub_sets(self.inds, X, y)
+        self.models = []
         
-        for (X_train, X_test, y_train, y_test) in train_test_sets:
+        for (X_train, y_train) in sub_sets:
+            model = copy.deepcopy(self.model)
             model.fit(X_train,y_train)
-            trainscore = model.score(X_train,y_train)
-            testscore = model.score(X_test,y_test)
-            trainscores.append(trainscore)
-            testscores.append(testscore)
-            trainweights.append(len(y_train))
-            testweights.append(len(y_test))
+            self.models.append(model)
+
+    def score(self, X, y):
+        sub_sets = self.get_sub_sets(self.inds, X, y)
+        scores = []
+        weights = []
+        
+        for (model,(X_test, y_test)) in zip(self.models, sub_sets):
+            scores.append(model.score(X_test, y_test))
+            weights.append(len(y_test))
             
-        self.trainscore = np.average(trainscores,weights=trainweights)
-        self.testscore = np.average(testscores,weights=testweights)
+        return np.average(scores,weights=weights)
         
     def get_group_ind(self, df, column, value):
         return df[column].isin(value)
@@ -41,12 +43,8 @@ class SegmentedModel(object):
         return [self.get_group_inds(df, group) for group in groups]
     
     def get_combined_inds(self, group_inds_list):
-        if len(group_inds_list) == 1:
-            return group_inds_list[0]
-        else:
-            return [(inds[0]&inds[1]) for inds in product(*group_inds_list)]
+        return [reduce((lambda x, y: x & y),inds) for inds in product(*group_inds_list)]
         
-    def get_train_test_sets(self, inds, (X_train, X_test, y_train, y_test)):
-        return [(X_train.loc[ind], X_test.loc[ind], y_train.loc[ind], y_test.loc[ind]) for ind in inds]        
-    
+    def get_sub_sets(self, inds, X, y):
+        return [(X.loc[ind], y.loc[ind]) for ind in inds]        
 
