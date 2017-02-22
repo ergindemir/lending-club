@@ -15,7 +15,7 @@ Financial institutions use these parameters to:
 
   EL = PD X LGD X EAD
 
-Within the scope of this project, the focus will be the calculation of the PD
+Within the scope of this project, the focus will be the estimation of the PD
 
 ## EDA I
 https://github.com/ergindemir/lending-club/blob/master/EDA.ipynb
