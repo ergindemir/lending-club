@@ -78,3 +78,5 @@ The segmented model performances are plotted in decreasing scores with the perfo
 
 ![Alt](https://github.com/ergindemir/lending-club/blob/master/segmented_model_performance.png "Model Performance")
 
+![Alt](https://github.com/ergindemir/lending-club/blob/master/roc_curves.png "ROC Curves")
+
