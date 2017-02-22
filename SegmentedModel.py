@@ -1,6 +1,7 @@
 import numpy as np
 from itertools import product
 from sklearn.base import BaseEstimator
+import pandas as pd
 import copy
 
 class SegmentedModel(BaseEstimator):
@@ -47,4 +48,13 @@ class SegmentedModel(BaseEstimator):
         
     def get_sub_sets(self, inds, X, y):
         return [(X.loc[ind], y.loc[ind]) for ind in inds]        
+    
+    def predict_proba(self,X):       
+        return pd.concat([pd.DataFrame(index = X[inds].index, 
+                      data = model.predict_proba(X.loc[inds])[:,1])
+        for (model,inds) in zip(self.models, self.inds)]).reindex(X.index)
+
+             
+     
+
 
